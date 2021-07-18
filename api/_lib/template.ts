@@ -7,9 +7,6 @@ const twemoji = require('twemoji');
 const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 
-const rglr = readFileSync(`${__dirname}/../_fonts/Inter-Regular.woff2`).toString('base64');
-const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('base64');
-const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
 const noto = readFileSync(`${__dirname}/../_fonts/NotoSansJP-Regular.otf`).toString('base64');
 
 const ORIGIN = process.env.VERCEL_ENV === "development" ? "http://localhost:3000" : `https://${process.env.VERCEL_URL}`
@@ -26,26 +23,6 @@ function getCss(theme: string, fontSize: string) {
     }
     return `
     @font-face {
-        font-family: 'Inter';
-        font-style:  normal;
-        font-weight: normal;
-        src: url(data:font/woff2;charset=utf-8;base64,${rglr}) format('woff2');
-    }
-
-    @font-face {
-        font-family: 'Inter';
-        font-style:  normal;
-        font-weight: bold;
-        src: url(data:font/woff2;charset=utf-8;base64,${bold}) format('woff2');
-    }
-
-    @font-face {
-        font-family: 'Vera';
-        font-style: normal;
-        font-weight: normal;
-        src: url(data:font/woff2;charset=utf-8;base64,${mono})  format("woff2");
-      }
-    @font-face {
         font-family: 'Noto';
         font-style: normal;
         font-weight: normal;
@@ -53,7 +30,7 @@ function getCss(theme: string, fontSize: string) {
     }
 
     body {
-        font-family: 'Inter', 'Noto', sans-serif;
+        font-family: 'Noto', sans-serif;
         background: ${background};
         background-size: 100px 100px;
         height: 100vh;
@@ -61,17 +38,6 @@ function getCss(theme: string, fontSize: string) {
         text-align: center;
         align-items: center;
         justify-content: center;
-    }
-
-    code {
-        color: #D400FF;
-        font-family: 'Vera';
-        white-space: pre-wrap;
-        letter-spacing: -5px;
-    }
-
-    code:before, code:after {
-        content: '\`';
     }
 
     .player-wrapper {
@@ -92,12 +58,6 @@ function getCss(theme: string, fontSize: string) {
         margin: 0 75px;
     }
 
-    .plus {
-        color: #BBB;
-        font-family: Times New Roman, Verdana;
-        font-size: 100px;
-    }
-
     .spacer {
         margin: 150px;
     }
@@ -115,7 +75,7 @@ function getCss(theme: string, fontSize: string) {
     }
     
     .heading {
-        font-family: 'Inter', 'Noto', sans-serif;
+        font-family: 'Noto', sans-serif;
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
