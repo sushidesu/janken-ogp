@@ -7,7 +7,7 @@ const twemoji = require('twemoji');
 const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 
-const noto = readFileSync(`${__dirname}/../_fonts/NotoSansJP-Regular.otf`).toString('base64');
+const noto = readFileSync(`${__dirname}/../_fonts/NotoSansJP-Bold.otf`).toString('base64');
 
 const ORIGIN = process.env.VERCEL_ENV === "development" ? "http://localhost:3000" : `https://${process.env.VERCEL_URL}`
 
