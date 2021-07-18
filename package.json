@@ -8,9 +8,11 @@
   },
   "dependencies": {
     "chrome-aws-lambda": "7.0.0",
+    "global": "4.4.0",
     "marked": "2.0.0",
     "puppeteer-core": "7.0.0",
-    "twemoji": "13.0.1"
+    "twemoji": "13.0.1",
+    "vercel": "23.0.1"
   },
   "devDependencies": {
     "@types/marked": "1.2.2",
