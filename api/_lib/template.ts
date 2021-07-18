@@ -63,6 +63,7 @@ function getCss(theme: string, fontSize: string) {
     }
 
     .hand .emoji {
+        margin-top: 80px;
         height: 2em;
         width: 2em;
     }
@@ -79,7 +80,7 @@ function getCss(theme: string, fontSize: string) {
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
-        line-height: 1.8;
+        line-height: 1.4;
     }`
 }
 
