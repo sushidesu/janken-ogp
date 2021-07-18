@@ -5,28 +5,39 @@ import { ParsedRequest } from './types';
 export function parseRequest(req: IncomingMessage) {
     console.log('HTTP ' + req.url);
     const { query } = parse(req.url || '/', true);
-    const { result, playerName, opponentName, playerHand, opponentHand } = (query || {});
+    const { rs, r, l, rh, lh } = (query || {});
+
+    const result = () => {
+      switch (flatten(rs)) {
+        case "r":
+          return `${r} の勝ち！`
+        case "l":
+          return `${l} の勝ち！`
+        default:
+          return "あいこ！"
+      }
+    }
 
     const parsedRequest: ParsedRequest = {
-        result: flattenAndDecode(result),
-        playerName: flattenAndDecode(playerName),
-        playerHand: parseHand(playerHand),
-        opponentName: flattenAndDecode(opponentName),
-        opponentHand: parseHand(opponentHand),
+        result: result(),
+        playerName: flattenAndDecode(l),
+        playerHand: parseHand(lh),
+        opponentName: flattenAndDecode(r),
+        opponentHand: parseHand(rh),
     };
     return parsedRequest;
 }
 
 const parseHand = (value: string | string[] | undefined): string => {
   switch (value) {
-    case "rock":
+    case "r":
       return "✊"
-    case "paper":
+    case "p":
       return "🖐"
-    case "scissors":
+    case "s":
       return "✌"
     default:
-      return "?"
+      return "✊"
   }
 }
 
