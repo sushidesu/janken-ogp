@@ -1,6 +1,8 @@
 .github
 node_modules
 api/dist
+dist
 public/dist
 CONTRIBUTING.md
 README.md
+.vercel

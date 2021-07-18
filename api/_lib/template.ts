@@ -11,6 +11,8 @@ const rglr = readFileSync(`${__dirname}/../_fonts/Inter-Regular.woff2`).toString
 const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('base64');
 const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
 
+const ORIGIN = process.env.VERCEL_ENV === "development" ? "http://localhost:3000" : `https://${process.env.VERCEL_URL}`
+
 function getCss(theme: string, fontSize: string) {
     let background = 'white';
     let foreground = 'black';
@@ -64,12 +66,18 @@ function getCss(theme: string, fontSize: string) {
         content: '\`';
     }
 
-    .logo-wrapper {
+    .player-wrapper {
+        width: 90vw;
+        margin: 0 auto;
         display: flex;
         align-items: center;
         align-content: center;
-        justify-content: center;
+        justify-content: space-between;
         justify-items: center;
+    }
+    .player {
+      width: 1000px;
+      padding: 0 50px;
     }
 
     .logo {
@@ -84,6 +92,11 @@ function getCss(theme: string, fontSize: string) {
 
     .spacer {
         margin: 150px;
+    }
+
+    .hand .emoji {
+        height: 2em;
+        width: 2em;
     }
 
     .emoji {
@@ -103,7 +116,8 @@ function getCss(theme: string, fontSize: string) {
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { text,
+    const {
+      result,
       playerName, opponentName,
       playerHand, opponentHand
     } = parsedReq;
@@ -118,30 +132,26 @@ export function getHtml(parsedReq: ParsedRequest) {
     <body>
         <div>
             <div class="spacer">
-            <div class="heading">${emojify(
-                marked(text),
-            )}
+            <div class="heading">${emojify(marked(result))}
             </div>
             <div class="spacer">
-            <div class="heading">${sanitizeHtml(playerName)}</div>
-            <div class="heading">${emojify(sanitizeHtml(playerHand))}</div>
-            <div class="heading">${sanitizeHtml(opponentName)}</div>
-            <div class="heading">${emojify(sanitizeHtml(opponentHand))}</div>
+            <div class="player-wrapper">
+              <div class="player">
+                <div class="heading">${sanitizeHtml(playerName)}</div>
+                <div class="heading hand">${emojify(
+                  sanitizeHtml(playerHand)
+                )}</div>
+              </div>
+              <div class="heading">VS</div>
+              <div class="player">
+                <div class="heading">${sanitizeHtml(opponentName)}</div>
+                <div class="heading hand">${emojify(
+                  sanitizeHtml(opponentHand)
+                )}</div>
+              </div>
+            </div>
+            <img style="margin-right: 100px;" width="600px" height="100%" src="${ORIGIN}/kabuking.png" />
         </div>
     </body>
-</html>`;
+</html>`
 }
-
-//function getImage(src: string, width ='auto', height = '225') {
-//    return `<img
-//        class="logo"
-//        alt="Generated Image"
-//        src="${sanitizeHtml(src)}"
-//        width="${sanitizeHtml(width)}"
-//        height="${sanitizeHtml(height)}"
-//    />`
-//}
-
-//function getPlusSign(i: number) {
-//    return i === 0 ? '' : '<div class="plus">+</div>';
-//}

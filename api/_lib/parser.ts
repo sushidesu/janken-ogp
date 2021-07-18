@@ -4,25 +4,15 @@ import { ParsedRequest } from './types';
 
 export function parseRequest(req: IncomingMessage) {
     console.log('HTTP ' + req.url);
-    const { pathname, query } = parse(req.url || '/', true);
-    const { playerName, opponentName, playerHand, opponentHand } = (query || {});
-
-    const arr = (pathname || '/').slice(1).split('.');
-    let text = '';
-    if (arr.length === 0) {
-        text = '';
-    } else if (arr.length === 1) {
-        text = arr[0];
-    } else {
-        text = arr.join('.');
-    }
+    const { query } = parse(req.url || '/', true);
+    const { result, playerName, opponentName, playerHand, opponentHand } = (query || {});
 
     const parsedRequest: ParsedRequest = {
+        result: flattenAndDecode(result),
         playerName: flattenAndDecode(playerName),
         playerHand: parseHand(playerHand),
         opponentName: flattenAndDecode(opponentName),
         opponentHand: parseHand(opponentHand),
-        text: decodeURIComponent(text),
     };
     return parsedRequest;
 }
